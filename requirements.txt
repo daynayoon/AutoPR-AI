@@ -1,0 +1,2 @@
+# it describes how project AutoPR-AI works
+# last update (25.05.26)
