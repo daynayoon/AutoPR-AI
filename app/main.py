@@ -8,6 +8,8 @@ from app.core.exception_handler import validation_exception_handler, http_except
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.routers import db_test
+
 app = FastAPI(
     title=settings.APP_NAME,
     description=settings.DESCRIPTION,
@@ -17,6 +19,7 @@ app = FastAPI(
 # set the routers (sub fastapi application, path operations)
 app.include_router(github.router, prefix="/github", tags=["Github"])
 app.include_router(review.router, prefix="/review", tags=["Code Review"])
+app.include_router(db_test.router, prefix="/db-test", tags=["DB test"])
 
 # custom exception handlers
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
