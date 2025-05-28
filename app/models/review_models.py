@@ -8,6 +8,8 @@ from pydantic import field_serializer
 # MongoDB files, code_reviews collection mapping
 
 # MongoDB collection mappings
+# PyObjectId: ObjectId (MongoDB's ID), so Pydantic check 
+#             if ObjectId is valid and translate to ObjectId.
 class PyObjectId(ObjectId):
     @classmethod
     def __get_validators__(cls):
@@ -21,6 +23,8 @@ class PyObjectId(ObjectId):
             raise ValueError("Invalid ObjectId")
         return ObjectId(v)
     
+# CodeReviewModel and FileModel define structure of the 
+# collection and rules of JSON transformation
 # files collections
 class FileModel(BaseModel):
     model_config = ConfigDict(

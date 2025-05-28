@@ -23,7 +23,10 @@ router = APIRouter()
 @router.post("/insert-file")
 async def insert_file(db=Depends(get_db)):
     content_b64 = base64.b64encode(b"print('Hello')").decode()
-    doc = {"filename": "example.py", "content": content_b64, "uploaded_at": "2025-05-28"}
+    doc = {"filename": "example.py", 
+           "content": content_b64, 
+           "uploaded_at": "2025-05-28"}
+    
     res = await db.files.insert_one(doc)
     return {"inserted_id": str(res.inserted_id)}
 

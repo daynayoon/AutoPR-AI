@@ -11,8 +11,11 @@ class User(BaseModel):
     username: str
     access_token: str
 
-# TODO: user_models.py is gonna be connected to OAuth (auth_service) and github router auth logic
+# TODO: user_models.py is gonna be connected to OAuth 
+#       (auth_service) and github router auth logic
 
+# PyObjectId: ObjectId (MongoDB's ID), so Pydantic check if 
+#             ObjectId is valid and translate to ObjectId.
 class PyObjectId(ObjectId):
     @classmethod
     def __get_validators__(cls):
@@ -26,6 +29,7 @@ class PyObjectId(ObjectId):
             raise ValueError("Invalid ObjectId")
         return ObjectId(v)
     
+# UserModels defines that schema of the user document
 class UserModel(BaseModel):
     model_config = ConfigDict(
         populate_by_name=True,
