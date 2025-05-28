@@ -14,7 +14,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app.core.db import get_db
 import base64
 
-from app.models.review_models import FileModel
+from app.models.review_models import FileModel, CodeReviewModel
 from app.models.user_models import UserModel
 from bson import ObjectId, errors
 
@@ -58,6 +58,29 @@ async def get_user(user_id: str, db=Depends(get_db)):
     if not doc:
         raise HTTPException(status_code=404, detail="User not found")
     return doc
+
+@router.post("/insert-review")
+async def insert_code_review(db=Depends(get_db)):
+    review_doc = {
+        "file_id": ObjectId("665682b20b6d29b0c7c9f1f5"),
+        "review_comments": ["Consider adding type hints", "Refactor loop structure"],
+        "summary": "Improved code readability and structure",
+        "created_at": "2025-05-29"
+    }
+    res = await db.code_reviews.insert_one(review_doc)
+    return {"inserted_id": str(res.inserted_id)}
+
+@router.get("/get-review/{review_id}", response_model=CodeReviewModel)
+async def get_code_review(review_id: str, db=Depends(get_db)):
+    try:
+        oid = ObjectId(review_id)
+    except errors.InvalidId:
+        raise HTTPException(status_code=400, detail="Invalid review_id format")
+    doc = await db.code_reviews.find_one({"_id": oid})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Code review not found")
+    return doc
+
 
 
 # @router.get("/test-db")
