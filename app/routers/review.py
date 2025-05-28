@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from pydantic import BaseModel
 from app.services.review_service import save_uploaded_file, analyze_code, summarize_review
-from app.models.review_models import UploadResponse, CodeReview, AnalyzeRequest
+from app.models.review_models import UploadResponse, CodeReviewModel, AnalyzeRequest
 
 from app.auth.dependencies import get_current_user
 from app.core.db import get_db
