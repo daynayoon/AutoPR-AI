@@ -4,10 +4,10 @@ from pydantic import BaseModel
 # so it doesnt need to be saved in MongoDB, data requesting to Github API directly
 
 class PRRequest(BaseModel):
-    repo: str
-    branch: str
-    title: str
-    body: str
+    repo: str       # ex. "username/repository"
+    branch: str     # PR branch
+    title: str      # PR title
+    body: str       # PR body paragraph
 
 class CommentRequest(BaseModel):
     repo: str
