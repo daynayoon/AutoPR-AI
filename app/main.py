@@ -3,6 +3,7 @@
 
 from fastapi import FastAPI
 from app.routers import github, review
+from app.auth import github_oauth
 from app.core.config import settings
 from app.core.exception_handler import validation_exception_handler, http_exception_handler
 from fastapi.exceptions import RequestValidationError
@@ -20,6 +21,7 @@ app = FastAPI(
 app.include_router(github.router, prefix="/github", tags=["Github"])
 app.include_router(review.router, prefix="/review", tags=["Code Review"])
 app.include_router(db_test.router, prefix="/db-test", tags=["DB test"])
+app.include_router(github_oauth.router, prefix="/oauth", tags=["Github OAuth"])
 
 # custom exception handlers
 app.add_exception_handler(RequestValidationError, validation_exception_handler)

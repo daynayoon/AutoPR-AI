@@ -11,6 +11,12 @@ router = APIRouter()
 
 # pr: request PR (POST)
 # comment: add comment on the PR (POST)
+ 
+class PRRequest(BaseModel):
+    repo: str       # ex. "username/repository"
+    branch: str     # PR branch
+    title: str      # PR title
+    body: str       # PR body paragraph
 
 @router.post("/pr")
 async def create_pr(pr: PRRequest):
