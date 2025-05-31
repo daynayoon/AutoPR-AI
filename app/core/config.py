@@ -1,4 +1,4 @@
-# 환경변수 로드나 공통 설정을 담을 파일
+# environmental variables
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
