@@ -1,8 +1,10 @@
-from motor.motor_asyncio import AsyncIOMotorClient
-from fastapi import Depends
-from pathlib import Path
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
+from fastapi import Depends
+from motor.motor_asyncio import AsyncIOMotorClient
+
 
 # MongoDB connect dependencies
 

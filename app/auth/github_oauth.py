@@ -1,8 +1,11 @@
-from fastapi import APIRouter, Request, Depends
-from fastapi.responses import RedirectResponse
-from app.core.db import get_db
 import os
 import requests
+
+from fastapi import APIRouter, Request, Depends
+from fastapi.responses import RedirectResponse
+
+from app.core.db import get_db
+
 
 
 router = APIRouter()

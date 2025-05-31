@@ -1,9 +1,11 @@
 # Github PR request code
 # Github Comment code
 
-from typing import Optional
 import os
+from typing import Optional
+
 from github import Github, GithubException, BadCredentialsException
+
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 

@@ -1,8 +1,7 @@
-from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
-from bson import ObjectId
-from pydantic import field_serializer
 
+from bson import ObjectId
+from pydantic import BaseModel, Field, ConfigDict, field_serializer
 
 # user data model (GitHub OAuth)
 

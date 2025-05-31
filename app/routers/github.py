@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
+
 from app.services.github_service import create_pull_request, add_pr_comment
 from app.models.github_models import PRRequest, CommentRequest
-
-from app.auth.dependencies import get_current_user
 from app.models.user_models import User
+from app.auth.dependencies import get_current_user
+
 
 #github router
 router = APIRouter()

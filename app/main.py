@@ -1,15 +1,16 @@
 # main.py creates the FastAPI app (entrypoint)
 # register routers, add middleware, load settings
 
+# Python import state: standard -> third party -> local modules
 from fastapi import FastAPI
-from app.routers import github, review
-from app.auth import github_oauth
-from app.core.config import settings
-from app.core.exception_handler import validation_exception_handler, http_exception_handler
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app.routers import db_test
+from app.routers import github, review, db_test
+from app.auth import github_oauth
+from app.core.config import settings
+from app.core.exception_handler import validation_exception_handler, http_exception_handler
+
 
 app = FastAPI(
     title=settings.APP_NAME,

@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional, List 
+from typing import Optional, List
+
 from bson import ObjectId
-from pydantic import field_serializer
+from pydantic import BaseModel, Field, ConfigDict, field_serializer
+
 
 
 # code review request/response, MongoDB collection model
