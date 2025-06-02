@@ -42,9 +42,6 @@ async def review_code(req: AnalyzeRequest, db=Depends(get_db)):
     return result
 
 
-
-
-
 @router.get("/summary")
 async def review_summary():
     # TODO: return the result of the code analysis
