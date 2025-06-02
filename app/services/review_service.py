@@ -5,7 +5,6 @@
 import base64
 import os
 from datetime import datetime
-from typing import Optional
 
 from bson import ObjectId
 from openai import OpenAI
@@ -26,19 +25,14 @@ async def analyze_code(file_id: str,  db):
         code = base64.b64decode(content_b64).decode()
 
         # GPT-4 analyze (e.g., OpenAI ChatCompletion)
-        # response = client.chat.completions.create(
-        #     model="gpt-4",
-        #     messages=[
-        #         {"role": "system", "content": "You are a code reviewer."},
-        #         {"role": "user", "content": f"Review this code:\n{code}"}
-        #     ]
-        # )
-        # review_comments = response.choices[0].message.content.strip().split("\n")
-        review_comments = [
-            "Consider adding type hints.",
-            "Refactor nested loops to improve readability.",
-            "Check for potential security issues (input validation)."
-        ]
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a code reviewer."},
+                {"role": "user", "content": f"Review this code:\n{code}"}
+            ]
+        )
+        review_comments = response.choices[0].message.content.strip().split("\n")
 
         # save review_comments
         review_doc = {
