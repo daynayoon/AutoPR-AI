@@ -1,7 +1,8 @@
 from typing import Optional, List
 
 from bson import ObjectId
-from pydantic import BaseModel, Field, ConfigDict, field_serializer
+from pydantic import BaseModel, Field, ConfigDict, GetCoreSchemaHandler
+from pydantic_core import core_schema
 
 
 
@@ -23,6 +24,11 @@ class PyObjectId(ObjectId):
         if not ObjectId.is_valid(v):
             raise ValueError("Invalid ObjectId")
         return ObjectId(v)
+    
+    @classmethod
+    def __get_pydantic_json_schema__(cls, core_schema: core_schema.CoreSchema, handler: GetCoreSchemaHandler):
+        return {'type': 'string'}
+    
     
 # CodeReviewModel and FileModel define structure of the 
 # collection and rules of JSON transformation
