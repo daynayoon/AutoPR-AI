@@ -1,10 +1,13 @@
 import os
 import requests
 
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.responses import RedirectResponse
+from datetime import datetime
 
 from app.core.db import get_db
+from app.auth.token_service import create_access_token
+from app.models.user_models import UserModel
 
 
 
@@ -33,24 +36,34 @@ async def github_callback(code: str, db=Depends(get_db)):
     response = requests.post(token_url, headers=headers, data=data)
     access_token = response.json().get("access_token")
     if not access_token:
-        return {"error": "Failed to obtain access token"}
+        return HTTPException(status_code=400, detail="Failed to obtain access token")
     
     # save user info and session
-    user_response = requests.get(
-        "https://api.github.com/user", # request user information
-        headers={"Authorization": f"token {access_token}"}
-    )
+    user_response = requests.get("https://api.github.com/user", headers={"Authorization": f"token {access_token}"})
     user_data = user_response.json()
     github_id = str(user_data.get("id"))
     username = user_data.get("login")
     
     # DB save or update
-    user_doc = {
-        "_id": github_id,
-        "github_id": github_id,
-        "username": username,
-        "access_token": access_token
-    }
-    await db.users.update_one({"_id": github_id}, {"$set": user_doc}, upsert=True)
+    # user_doc = {
+    #     "_id": github_id,
+    #     "github_id": github_id,
+    #     "username": username,
+    #     "access_token": access_token
+    # }
+    # await db.users.update_one({"_id": github_id}, {"$set": user_doc}, upsert=True)
+    await db.users.update_one(
+        {"github_id": github_id},
+        {"$set": {
+            "username": username,
+            "access_token": access_token,
+            "created_at": datetime.utcnow().isoformat()
+        }},
+        upsert=True
+    )
+
+    # JWT token
+    token_data = {"sub": github_id, "username": username}
+    jwt_token = create_access_token(token_data)
     
-    return {"message": "GitHub login success", "username": username}
+    return {"message": "GitHub login success", "username": username, "jwt_token": jwt_token}
