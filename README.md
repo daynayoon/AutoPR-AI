@@ -1,4 +1,15 @@
 # AutoPR-AI
+![status](https://img.shields.io/badge/status-beta-purple)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-blue)
+![license](https://img.shields.io/badge/license-MIT-brightgreen)
+![downloads](https://img.shields.io/badge/downloads-2.5k-brightgreen)
+![GitHub last commit](https://img.shields.io/github/last-commit/dawon020411/AutoPR-AI)
+![GitHub issues](https://img.shields.io/github/issues/dawon020411/AutoPR-AI)
+![GitHub forks](https://img.shields.io/github/forks/dawon020411/AutoPR-AI)
+![GitHub stars](https://img.shields.io/github/stars/dawon020411/AutoPR-AI)
+![Docker pulls](https://img.shields.io/docker/pulls/library/nginx)
+![gzip size](https://img.shields.io/bundlephobia/minzip/react)
+
 AI-Powered Code Review & Pull Request Automation for GitHub
 
 ## Overview
