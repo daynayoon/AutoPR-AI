@@ -18,3 +18,41 @@ Built with **Python (FastAPI)** and **MongoDB**, it **integrates OpenAI's GPT mo
 - **Database**: MongoDB (motor)
 - **Authentication**: GitHub OAuth, JWT
 - **Dev Tools**: Docker (optional), Swagger UI, ReDoc
+  
+## Getting Started
+1. **Clone the repository**
+```
+   git clone https://github.com/yourusername/AutoPR-AI.git
+   cd AutoPR-AI
+```
+2. **Set up the virtual environment**
+```
+    python -m venv venv
+    source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+```
+3. **Install dependencies**
+```
+    pip install -r requirements.txt
+```
+4. **Configure environment variables**
+   - Create a `.env` file with the following keys:
+```
+GITHUB_TOKEN=your_github_pat
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
+OPENAI_API_KEY=your_openai_api_key
+```
+5. **Run the server**
+```
+uvicorn app.main:app --reload
+```
+## API Reference
+Detailed endpoint descriptions and request/response examples are available in [API_DOC.md](docs/API_DOC.md).
+
+## Future Improvements
+- Integration with CI/CD pipelines
+- Enhanced review analysis with custom GPT models
+- Frontend dashboard for code review management (React)
+  
+## License
+This project is licensed under the MIT License.
