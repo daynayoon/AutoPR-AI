@@ -66,4 +66,6 @@ async def github_callback(code: str, db=Depends(get_db)):
     token_data = {"sub": github_id, "username": username}
     jwt_token = create_access_token(token_data)
     
-    return {"message": "GitHub login success", "username": username, "jwt_token": jwt_token}
+    # return {"message": "GitHub login success", "username": username, "jwt_token": jwt_token}
+    redirect_url = f"http://localhost:3000/github-login?token={jwt_token}"
+    return RedirectResponse(redirect_url)

@@ -1,10 +1,13 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
+from bson import ObjectId
 
 from app.services.github_service import create_pull_request, add_pr_comment
 from app.models.github_models import PRRequest, CommentRequest
 from app.models.user_models import UserModel
+from app.models.review_models import CodeReviewModel
 from app.auth.dependencies import get_current_user
+from app.core.db import get_db
 
 
 #github router
@@ -15,9 +18,17 @@ router = APIRouter()
 
 
 @router.post("/pr")
-async def create_pr(pr: PRRequest, user: UserModel = Depends(get_current_user)):
+async def create_pr(pr: PRRequest, db=Depends(get_db), user: UserModel = Depends(get_current_user)):
     # TODO: Github API call logic
     result = create_pull_request(pr.repo, pr.branch, pr.title, pr.body)
+
+    file_id = pr.file_id
+    code_review_doc = await db.code_reviews.find_one({"file_id": ObjectId(file_id)})
+    if code_review_doc:
+        review_comments = code_review_doc.get("review_comments", [])
+        for comment in review_comments:
+            add_pr_comment(pr.repo, result["pr_numer"], comment)
+
     return result
 
 @router.post("/comment")

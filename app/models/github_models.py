@@ -9,6 +9,7 @@ class PRRequest(BaseModel):
     branch: str     # PR branch
     title: str      # PR title
     body: str       # PR body paragraph
+    file_id: str 
 
 class CommentRequest(BaseModel):
     repo: str

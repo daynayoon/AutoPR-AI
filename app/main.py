@@ -4,6 +4,7 @@
 # Python import state: standard -> third party -> local modules
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.routers import github, review, db_test
@@ -16,6 +17,14 @@ app = FastAPI(
     title=settings.APP_NAME,
     description=settings.DESCRIPTION,
     version=settings.VERSION
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # address that Next.js is running
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # set the routers (sub fastapi application, path operations)
