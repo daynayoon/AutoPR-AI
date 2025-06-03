@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function CreatePR() {
-  const [fileId, setFileId] = useState(localStorage.getItem("file_id"));
+  //   const [fileId, setFileId] = useState(localStorage.getItem("file_id"));
+  const [fileId, setFileId] = useState("");
   const [repo, setRepo] = useState("");
   const [branch, setBranch] = useState("");
   const [title, setTitle] = useState("");
@@ -10,6 +11,13 @@ export default function CreatePR() {
   const [token, setToken] = useState("");
   const [result, setResult] = useState(null);
   //   const token = localStorage.getItem("jwt_token");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setFileId(localStorage.getItem("file_id"));
+      setToken(localStorage.getItem("jwt_token"));
+    }
+  }, []);
 
   const handleCreatePR = async () => {
     try {
