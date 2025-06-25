@@ -1,35 +1,43 @@
-# AutoPR-AI
+# AutoPR-AI: Intelligent Code Review API
 ![status](https://img.shields.io/badge/status-beta-purple)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-blue)
 ![license](https://img.shields.io/badge/license-MIT-brightgreen)
-![downloads](https://img.shields.io/badge/downloads-2.5k-brightgreen)
-![GitHub last commit](https://img.shields.io/github/last-commit/dawon020411/AutoPR-AI)
-![GitHub issues](https://img.shields.io/github/issues/dawon020411/AutoPR-AI)
-![GitHub forks](https://img.shields.io/github/forks/dawon020411/AutoPR-AI)
-![GitHub stars](https://img.shields.io/github/stars/dawon020411/AutoPR-AI)
-![Docker pulls](https://img.shields.io/docker/pulls/library/nginx)
-![gzip size](https://img.shields.io/bundlephobia/minzip/react)
+![GitHub last commit](https://img.shields.io/github/last-commit/daynayoon/AutoPR-AI)
+![GitHub issues](https://img.shields.io/github/issues/daynayoon/AutoPR-AI)
+![GitHub forks](https://img.shields.io/github/forks/daynayoon/AutoPR-AI)
+![GitHub stars](https://img.shields.io/github/stars/daynayoon/AutoPR-AI)
 
-AI-Powered Code Review & Pull Request Automation for GitHub
-
-## Overview
-AutoPR-AI is a full-stack web application designed to automate code reviews and enhance collaboration on GitHub repositories. 
-Built with **Python (FastAPI)** and **MongoDB**, it **integrates OpenAI's GPT models** to provide code quality suggestions and generate pull requests with automated comments.
+**AutoPR-AI** is a backend REST API that enables automated code review for files. It leverages **Github OAuth, OpenAI GPT-4, and MongoDB Atlas** to anayze code and leave intelligent review comments directly on pull requests.
+> - GitHub OAuth Login
+> - GPT-4 Powered Code Review
+> - MongoDB Atlas for Data Persistence
+> - JWT Authentication
+> - RESTful API Design using FastAPI
 
 ## Features
-- GitHub OAuth authentication and JWT-based user session management
-- Secure code upload and asynchronous review analysis
-- GPT-powered code review comment generation
-- Automated pull request creation with inline review comments
-- Fully tested MongoDB CRUD operations for users, files, and reviews
-- API documentation via Swagger UI and ReDoc
+- **Upload a file** via `/review/upload`
+- **Generate a GPT-based review** via `/review/analyze`
+- **Create GitHub Pull Requests** via `/github/pr`
+- **Add automated review comments** via `/github/comment`
+- **Authenticate users via GitHub OAuth** via `/oauth/login`
+- **Issue JWT tokens** and manage user sessions
 
 ## Tech Stack
-- **Backend**: Python (FastAPI), PyGithub, OpenAI API, JWT, OAuth
-- **Database**: MongoDB (motor)
-- **Authentication**: GitHub OAuth, JWT
-- **Dev Tools**: Docker (optional), Swagger UI, ReDoc
-  
+- **FastAPI** – High-performance Python API framework
+- **MongoDB Atlas + Motor** – Asynchronous database access
+- **GitHub OAuth + PyGithub** – GitHub authentication & PR actions
+- **OpenAI GPT-4 API** – AI-powered code analysis and comment generation
+- **JWT (pyjwt)** – Secure user session management
+- **Swagger (OpenAPI)** – Auto-generated documentation at /docs
+
+## Authentication Flow
+- Visit `/oauth/login` to authenticate via GitHub
+- Receive a `jwt_token` on successful login
+- Pass the token in headers for protected endpoints: `Authorization: Bearer <jwt_token>`
+
+## Configuration
+Environment variables are required. See [`docs/env-guide.md`](./docs/env-guide.md) for full setup.
+
 ## Getting Started
 1. **Clone the repository**
 ```
@@ -59,11 +67,12 @@ uvicorn app.main:app --reload
 ```
 ## API Reference
 Detailed endpoint descriptions and request/response examples are available in [API_DOC.md](docs/API_DOC.md).
+> (or) Auto-generated Swagger UI is available at: <http://localhost:8000/docs>
 
 ## Future Improvements
-- Integration with CI/CD pipelines
-- Enhanced review analysis with custom GPT models
-- Frontend dashboard for code review management (React)
+- Advanced GPT-4 prompt engineering for better review quality
+- Auto-trigger reviews via GitHub webhooks
+- Optional frontend dashboard with React or Next.js
   
 ## License
 This project is licensed under the MIT License.
