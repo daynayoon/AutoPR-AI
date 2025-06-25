@@ -93,7 +93,7 @@ All endpoints follow RESTful conventions and are protected where necessary using
 
 ```
 {
-  "pr_numer": 7,
+  "pr_number": 7,
   "url": "https://github.com/username/repo/pull/7"
 }
 ```
