@@ -36,7 +36,7 @@
 - Pass the token in headers for protected endpoints: `Authorization: Bearer <jwt_token>`
 
 ## Configuration
-Environment variables are required. See [`docs/env-guide.md`](./docs/env-guide.md) for full setup.
+Environment variables are required. See [`docs/api-usage.md`](./docs/api-usage.md) for full setup.
 
 ## Getting Started
 1. **Clone the repository**
