@@ -7,7 +7,7 @@
 ![GitHub forks](https://img.shields.io/github/forks/daynayoon/AutoPR-AI)
 ![GitHub stars](https://img.shields.io/github/stars/daynayoon/AutoPR-AI)
 
-**AutoPR-AI** is a backend REST API that enables automated code review for files. It leverages **Github OAuth, OpenAI GPT-4, and MongoDB Atlas** to anayze code and leave intelligent review comments directly on pull requests.
+**AutoPR-AI** is a backend REST API that enables automated code review for files. It leverages **Github OAuth, OpenAI GPT-4, and MongoDB Atlas** to analyze code and leave intelligent review comments directly on pull requests.
 > - GitHub OAuth Login
 > - GPT-4 Powered Code Review
 > - MongoDB Atlas for Data Persistence
@@ -15,12 +15,12 @@
 > - RESTful API Design using FastAPI
 
 ## Features
-- **Upload a file** via `/review/upload`
-- **Generate a GPT-based review** via `/review/analyze`
-- **Create GitHub Pull Requests** via `/github/pr`
-- **Add automated review comments** via `/github/comment`
-- **Authenticate users via GitHub OAuth** via `/oauth/login`
-- **Issue JWT tokens** and manage user sessions
+- 📁 **Upload a file** via `/review/upload`
+- 🤖 **Generate a GPT-based review** via `/review/analyze`
+- 🔀 **Create GitHub Pull Requests** via `/github/pr`
+- 💬 **Add automated review comments** via `/github/comment`
+- 🔐 **Authenticate users via GitHub OAuth** via `/oauth/login`
+- 👉 **Issue JWT tokens** and manage user sessions
 
 ## Tech Stack
 - **FastAPI** – High-performance Python API framework
@@ -36,7 +36,7 @@
 - Pass the token in headers for protected endpoints: `Authorization: Bearer <jwt_token>`
 
 ## Configuration
-Environment variables are required. See [`docs/env-guide.md`](./docs/env-guide.md) for full setup.
+Environment variables are required. See [`docs/api-usage.md`](./docs/api-usage.md) for full setup.
 
 ## Getting Started
 1. **Clone the repository**
@@ -70,9 +70,10 @@ Detailed endpoint descriptions and request/response examples are available in [A
 > (or) Auto-generated Swagger UI is available at: <http://localhost:8000/docs>
 
 ## Future Improvements
-- Advanced GPT-4 prompt engineering for better review quality
-- Auto-trigger reviews via GitHub webhooks
-- Optional frontend dashboard with React or Next.js
+- Optional cloud deployment via GCP or Azure
+- Smarter GPT-4 prompt engineering
+- GitHub webhook support for automatic reviews
+- Frontend dashboard (React/Next.js) as a future extension
   
 ## License
 This project is licensed under the MIT License.
