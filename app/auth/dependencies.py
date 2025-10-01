@@ -7,6 +7,7 @@ from app.models.user_models import UserModel
 
 # Token dependencies for JWT authentication
 
+# handle JWT based authenticaiton, check user who request and return user information
 async def get_current_user(authorization: str = Header(...), db = Depends(get_db)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code = 401, detail="Invalid Authorization header")
