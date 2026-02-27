@@ -1,35 +1,44 @@
 import os
-from pathlib import Path
+from typing import Optional
 
-from dotenv import load_dotenv
-from fastapi import Depends
+from dotenv import find_dotenv, load_dotenv
+from fastapi import HTTPException, status
 from motor.motor_asyncio import AsyncIOMotorClient
 
 
-# MongoDB connect dependencies
+load_dotenv(find_dotenv())
 
-env_path = Path(__file__).parent.parent.parent / '.env'
-load_dotenv(dotenv_path=env_path)
-
-# everytime you got uri, add db name to uri
-print("Mongodb uri:", os.getenv("MONGODB_URI"))
 MONGODB_URI = os.getenv("MONGODB_URI")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
-print(f"DATABASE_NAME: {DATABASE_NAME}")
-print(f"env_path: {env_path.resolve()}")
 
-client = AsyncIOMotorClient(MONGODB_URI)
-db = client[DATABASE_NAME]
+client: Optional[AsyncIOMotorClient] = None
+db = None
 
-# try:
-#     client = AsyncIOMotorClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
-#     db = client[DATABASE_NAME]
-#     print("MongoDB connected")
-# except Exception as e:
-#     print(f"MongoDB failed: {e}")
+
+async def connect_to_mongo():
+    global client, db
+    if client:
+        return
+    if not MONGODB_URI or not DATABASE_NAME:
+        raise RuntimeError("MONGODB_URI or DATABASE_NAME is not configured")
+    client = AsyncIOMotorClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
+    db = client[DATABASE_NAME]
+    # warmup ping
+    await db.command("ping")
+
+
+async def close_mongo_connection():
+    global client
+    if client:
+        client.close()
+        client = None
+
 
 def get_motor_client():
     return client
 
+
 async def get_db():
+    if not db:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Database not initialized")
     return db

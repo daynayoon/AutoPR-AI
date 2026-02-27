@@ -1,6 +1,5 @@
-from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel
 from bson import ObjectId
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.services.github_service import create_pull_request, add_pr_comment
 from app.models.github_models import PRRequest, CommentRequest
@@ -19,21 +18,24 @@ router = APIRouter()
 
 @router.post("/pr")
 async def create_pr(pr: PRRequest, db=Depends(get_db), user: UserModel = Depends(get_current_user)):
-    # TODO: Github API call logic
-    result = create_pull_request(pr.repo, pr.branch, pr.title, pr.body)
+    try:
+        file_object_id = ObjectId(pr.file_id)
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid file_id")
 
-    file_id = pr.file_id
-    code_review_doc = await db.code_reviews.find_one({"file_id": ObjectId(file_id)})
+    result = await create_pull_request(pr.repo, pr.branch, pr.title, pr.body)
+
+    code_review_doc = await db.code_reviews.find_one({"file_id": file_object_id})
     if code_review_doc:
         review_comments = code_review_doc.get("review_comments", [])
         for comment in review_comments:
-            add_pr_comment(pr.repo, result["pr_numer"], comment)
+            await add_pr_comment(pr.repo, result["pr_number"], comment)
 
     return result
 
 @router.post("/comment")
 async def add_comment(req: CommentRequest, user: UserModel = Depends(get_current_user)):
-    result = add_pr_comment(req.repo, req.pr_number, req.comment)
+    result = await add_pr_comment(req.repo, req.pr_number, req.comment)
     return result
 
 # get current user

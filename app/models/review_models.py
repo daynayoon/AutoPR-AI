@@ -42,6 +42,7 @@ class FileModel(BaseModel):
     filename: str
     content: str
     uploaded_at: str
+    uploaded_by: Optional[str] = None
 
 # code review collections
 class CodeReviewModel(BaseModel):
@@ -54,6 +55,7 @@ class CodeReviewModel(BaseModel):
     review_comments: List[str]
     summary: Optional[str]
     created_at: str
+    created_by: Optional[str] = None
 
 # API request/response models
 class UploadResponse(BaseModel):
